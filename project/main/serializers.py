@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .models import (
     MachineModel,
     EngineModel,
@@ -18,49 +18,55 @@ from .models import (
 class MachineModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = MachineModel
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
 
 class EngineSerializer(serializers.ModelSerializer):
     class Meta:
         model = EngineModel
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
 
 class TransmissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransmissionModel
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
     
 class LeadSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeadModel
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
 
 class ControlSerializer(serializers.ModelSerializer):
     class Meta:
         model = ControlModel
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
 
 class ServiceCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceCompany
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
 
 class TMTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TMType
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
 
 class FailureNodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = FailureNode
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
 
 class RecoveryMethodSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecoveryMethod
-        fields = ['name', 'description'] 
+        fields = ['id', 'name', 'description'] 
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ['id', 'name']
 
 class ClientSerializer(serializers.ModelSerializer):
+    groups = GroupSerializer(many=True)
     class Meta:
         model = User
         fields = ['username', 'groups'] 
@@ -73,9 +79,10 @@ class MachineSerializer(serializers.ModelSerializer):
     control_model = ControlSerializer()
     client = ClientSerializer()
     service_company = ServiceCompanySerializer()
+    date_of_shipment = serializers.DateField()
     class Meta:
         model = Machine
-        fields = ['machine_factory_num', 'machine_model',
+        fields = ['id', 'machine_factory_num', 'machine_model',
                   'engine_factory_num', 'engine_model', 
                   'transmission_factory_num', 'transmission_model', 
                   'lead_factory_num', 'lead_model', 
@@ -85,6 +92,12 @@ class MachineSerializer(serializers.ModelSerializer):
                   'equipment', 'client', 
                   'service_company',
                   ] 
+        read_only_fields = ('machine_factory_num', 'machine_model',
+                            'engine_factory_num', 'engine_model', 
+                            'transmission_factory_num', 'transmission_model', 
+                            'lead_factory_num', 'lead_model', 
+                            'control_factory_num', 'control_model', 
+                            )
 class UnauthorizedMachineSerializer(serializers.ModelSerializer):
     machine_model = MachineModelSerializer()
     engine_model = EngineSerializer()
@@ -93,7 +106,7 @@ class UnauthorizedMachineSerializer(serializers.ModelSerializer):
     control_model = ControlSerializer()
     class Meta:
         model = Machine
-        fields = ['machine_factory_num', 'machine_model',
+        fields = ['id', 'machine_factory_num', 'machine_model',
                   'engine_factory_num', 'engine_model', 
                   'transmission_factory_num', 'transmission_model', 
                   'lead_factory_num', 'lead_model', 
@@ -105,10 +118,12 @@ class TMSerializer(serializers.ModelSerializer):
     company_tm_producer = ServiceCompanySerializer()
     service_company = ServiceCompanySerializer()
     machine = MachineSerializer()
+    event_date = serializers.DateField()
+    order_date = serializers.DateField()
 
     class Meta:
         model = TM
-        fields = ['tm_type', 'event_date',
+        fields = ['id', 'tm_type', 'event_date',
                   'operating_time', 'order_id',
                   'order_date', 'company_tm_producer',
                   'service_company', 'machine'
@@ -119,10 +134,12 @@ class ComplaintSerializer(serializers.ModelSerializer):
     recovery_method = RecoveryMethodSerializer()
     machine = MachineSerializer()
     service_company = ServiceCompanySerializer()
+    refusal_date = serializers.DateField()
+    recovery_date = serializers.DateField()
 
     class Meta:
         model = Complaint
-        fields = ['refusal_date', 'operating_time',
+        fields = ['id', 'refusal_date', 'operating_time',
                   'failure_node', 'failure_description',
                   'recovery_method', 'spare_parts_used',
                   'recovery_date', 'equipment_downtime',

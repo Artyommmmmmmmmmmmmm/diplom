@@ -1,0 +1,22 @@
+.machine-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: 50px;
+    /* grid-auto-flow: column; */
+}
+
+.machine-table-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgb(255, 255, 255);
+}
+
+.machine-header {
+    color: white;
+}
+
+.clickable {
+    cursor: pointer;
+}

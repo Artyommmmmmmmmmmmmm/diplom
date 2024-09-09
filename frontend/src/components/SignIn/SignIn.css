@@ -1,0 +1,9 @@
+.signin-main-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signin-input {
+    width: 90%;
+}

@@ -1,0 +1,36 @@
+@import url('../../CssPresets/CssPreset.css');
+
+.main-content-cont {
+    color: white;
+    background-color: var(--first);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.switches-cont {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+span {
+    display: flex;
+    justify-content: center;
+}
+
+.switch-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    border: 3px solid var(--second);
+    border-radius: 3px;
+}
+
+.switch-button-active {
+    background-color: var(--second);
+}

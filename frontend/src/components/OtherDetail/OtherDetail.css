@@ -1,0 +1,39 @@
+@import url('../../CssPresets/CssPreset.css');
+
+.other-detail-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /*  */
+    grid-template-rows: 50px;
+    /* grid-auto-flow: column; */
+}
+
+.other-detail-table-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgb(255, 255, 255);
+}
+
+.other-detail-header {
+    color: white;
+}
+
+.main-other-detail-cont {
+    height: 100%;
+    color: white;
+    background-color: var(--first);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.other-detail-header {
+    font-size: 40px;
+}
+
+.other-detail-hint {
+    font-size: 20px;
+}

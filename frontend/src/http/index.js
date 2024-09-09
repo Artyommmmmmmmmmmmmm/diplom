@@ -7,11 +7,11 @@ const $api = axios.create({
     baseURL: BASE_URL, 
 });
 
-
-$api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('silantToken')}`
-    return config;
-})
-
+if (localStorage.getItem('silantToken')) {
+    $api.interceptors.request.use((config) => {
+        config.headers.Authorization = `Bearer ${localStorage.getItem('silantToken')}`
+        return config;
+    })
+}
 
 export default $api;

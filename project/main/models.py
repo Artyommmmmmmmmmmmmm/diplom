@@ -66,7 +66,7 @@ class Machine(models.Model):
         related_name='machine_control_model'
     )
     delivery_agreement_num = models.CharField(max_length=60)
-    date_of_shipment = models.DateTimeField(auto_now=True)
+    date_of_shipment = models.DateField()
     consignee = models.CharField(max_length=60)
     delivery_address = models.CharField(max_length=60)
     equipment = models.CharField(max_length=60)
@@ -91,10 +91,10 @@ class TM(models.Model):
         on_delete=models.CASCADE,
         related_name='tm_type'
     )
-    event_date = models.DateTimeField()
+    event_date = models.DateField()
     operating_time = models.IntegerField()
     order_id = models.CharField(max_length=60)
-    order_date = models.DateTimeField(auto_now=True)
+    order_date = models.DateField()
     company_tm_producer = models.ForeignKey(
         to=ServiceCompany,
         on_delete=models.CASCADE,
@@ -120,7 +120,7 @@ class RecoveryMethod(models.Model):
     description = models.CharField(max_length=2000)
 
 class Complaint(models.Model):
-    refusal_date = models.DateTimeField(max_length=60)
+    refusal_date = models.DateField(max_length=60)
     operating_time = models.IntegerField()
     failure_node = models.ForeignKey(
         to=FailureNode,
@@ -134,7 +134,7 @@ class Complaint(models.Model):
         related_name='complaint_recovery_method'
     )
     spare_parts_used = models.CharField(max_length=2000)
-    recovery_date = models.DateTimeField()
+    recovery_date = models.DateField()
     equipment_downtime = models.IntegerField()
     machine = models.ForeignKey(
         to=Machine,
